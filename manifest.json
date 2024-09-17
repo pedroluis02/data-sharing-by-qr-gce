@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "Data Sharing by QR",
+  "description": "Chrome Extension for Data sharing by QR code.",
+  "version": "0.0.1",
+  "icons": {
+    "32": "icon-32.png",
+    "48": "icon-48.png"
+  },
+  "action": {
+    "default_popup": "index.html"
+  },
+  "permissions": [],
+  "host_permissions": ["*://*/*"]
+}
