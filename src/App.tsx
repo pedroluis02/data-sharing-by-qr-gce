@@ -1,42 +1,61 @@
-import { Component } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg' 
+import { Component, ChangeEvent, createRef } from 'react'
+import QrCode from 'qrcode'
+
 import './App.css'
 
 class App extends Component {
-  state = { count: 0 };
+  state = { text: '' }
+  canvasRef = createRef<HTMLCanvasElement>()
 
-  increase = () => {
-    this.setState((prevState) => ({
-      count: prevState.count + 1
-    }));
+  changeText = (event: ChangeEvent<HTMLInputElement>) => {
+    this.setState({
+      text: event.target.value
+    })
+  }
+
+  generate = () => {
+    const canvas = this.canvasRef.current
+    if (!canvas) {
+      console.error('error loading canvas')
+      return
+    }
+
+    if (this.state.text.trim().length == 0) {
+      return;
+    }
+
+    const options =  {
+      width: 200,
+      color: { dark: '#0000ffff' }
+    }
+
+    QrCode.toCanvas(canvas, this.state.text, options, (error) => {
+      if (error) {
+        console.error(error)
+      } else {
+        console.log('sucess!')
+      }
+    })
   }
 
   render() {
     return (
       <>
-        <div>
-          <a href="https://vitejs.dev" target="_blank">
-            <img src={viteLogo} className="logo" alt="Vite logo" />
-          </a>
-          <a href="https://react.dev" target="_blank">
-            <img src={reactLogo} className="logo react" alt="React logo" />
-          </a>
-        </div>
-        <h1>Vite + React</h1>
+        <h1>Data sharing by QR Code</h1>
         <div className="card">
-          <button onClick={this.increase}>
-            count is {this.state.count}
-          </button>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test HMR
-          </p>
+          <input placeholder="Input text..." 
+            value={this.state.text} 
+            onChange={this.changeText} />
+          <p />
+          <button onClick={this.generate}>Genearte</button>
+          <p>{this.state.text}</p>
+          <canvas ref={this.canvasRef} />
         </div>
-        <p className="read-the-docs">
-          Click on the Vite and React logos to learn more
-        </p>
+        <div className="read-the-docs">
+          Scan this QR code!
+        </div>
       </>
-    );
+    )
   }
 }
 
