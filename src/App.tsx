@@ -4,8 +4,12 @@ import QrCode from 'qrcode'
 import './App.css'
 
 class App extends Component {
-  state = { text: '' }
+  state = { text: 'Helllo!' }
   canvasRef = createRef<HTMLCanvasElement>()
+
+  componentDidMount() {
+    this.generate();
+  }
 
   changeText = (event: ChangeEvent<HTMLInputElement>) => {
     this.setState({
