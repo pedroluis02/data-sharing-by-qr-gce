@@ -3,8 +3,13 @@ import QrCode from 'qrcode'
 
 import './App.css'
 
+interface AppState {
+  text: string
+  generatedText: string
+}
+
 class App extends Component {
-  state = { text: 'Helllo!', generatedText: '' }
+  state: AppState = { text: 'Helllo!', generatedText: '' }
   canvasRef = createRef<HTMLCanvasElement>()
 
   componentDidMount() {
@@ -16,7 +21,7 @@ class App extends Component {
   }
 
   setGeneratedText() {
-    this.setState((prevState: {text: string, generatedText: string}) => ({ generatedText: prevState.text }))
+    this.setState((prevState: AppState) => ({ generatedText: prevState.text }))
   }
 
   onChangeText = (event: ChangeEvent<HTMLInputElement>) => {
