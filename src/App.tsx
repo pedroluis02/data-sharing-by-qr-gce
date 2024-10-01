@@ -4,7 +4,7 @@ import QrCode from 'qrcode'
 import './App.css'
 
 class App extends Component {
-  state = { text: 'Helllo!' }
+  state = { text: 'Helllo!', generatedText: '' }
   canvasRef = createRef<HTMLCanvasElement>()
 
   componentDidMount() {
@@ -13,6 +13,10 @@ class App extends Component {
 
   setText(text: string) {
     this.setState({ text: text })
+  }
+
+  setGeneratedText() {
+    this.setState((prevState: {text: string, generatedText: string}) => ({ generatedText: prevState.text }))
   }
 
   onChangeText = (event: ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +28,6 @@ class App extends Component {
     if (tab.url) {
       console.log(`current-url: ${tab.url}`)
       this.setText(tab.url)
-
     }
   }
 
@@ -55,6 +58,7 @@ class App extends Component {
         console.error(error)
       } else {
         console.log('sucess!')
+        this.setGeneratedText()
       }
     })
   }
@@ -64,15 +68,16 @@ class App extends Component {
       <>
         <h1>Data sharing by QR Code</h1>
         <div className="card">
-        <a href="#" onClick={this.setTextFromCurrentTabUrl}>Current Tab URL</a>
-        <p />
+          <a href="#" onClick={this.setTextFromCurrentTabUrl}>Current Tab URL</a>
+          <p />
           <input placeholder="Input text..." 
             value={this.state.text} 
             onChange={this.onChangeText} />
           <p />
           <button onClick={this.generate}>Genearte</button>
-          <p>{this.state.text}</p>
+          <p />
           <canvas ref={this.canvasRef} />
+          <p>{this.state.generatedText}</p>
         </div>
         <div className="read-the-docs">
           Scan this QR code!
