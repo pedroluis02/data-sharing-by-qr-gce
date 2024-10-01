@@ -8,30 +8,30 @@ class App extends Component {
   canvasRef = createRef<HTMLCanvasElement>()
 
   componentDidMount() {
-    this.generate();
+    this.generate()
   }
 
-  changeText = (event: ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      text: event.target.value
-    })
+  setText(text: string) {
+    this.setState({ text: text })
+  }
+
+  onChangeText = (event: ChangeEvent<HTMLInputElement>) => {
+    this.setText(event.target.value)
   }
 
   setTextFromCurrentTabUrl = async () => {
     const tab = await this.getCurrentTab()
     if (tab.url) {
       console.log(`current-url: ${tab.url}`)
-      this.setState({
-        text: tab.url
-      })
+      this.setText(tab.url)
+
     }
   }
 
   getCurrentTab = async () => {
-    const options = { active: true, currentWindow: true };
-    const [currentTab] = await chrome.tabs.query(options);
-    
-    return currentTab;
+    const options = { active: true, currentWindow: true }
+    const [currentTab] = await chrome.tabs.query(options)
+    return currentTab
   }
 
   generate = () => {
@@ -42,7 +42,7 @@ class App extends Component {
     }
 
     if (this.state.text.trim().length == 0) {
-      return;
+      return
     }
 
     const options =  {
@@ -68,7 +68,7 @@ class App extends Component {
         <p />
           <input placeholder="Input text..." 
             value={this.state.text} 
-            onChange={this.changeText} />
+            onChange={this.onChangeText} />
           <p />
           <button onClick={this.generate}>Genearte</button>
           <p>{this.state.text}</p>
