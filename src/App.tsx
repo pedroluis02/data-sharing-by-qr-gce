@@ -17,6 +17,23 @@ class App extends Component {
     })
   }
 
+  setTextFromCurrentTabUrl = async () => {
+    const tab = await this.getCurrentTab()
+    if (tab.url) {
+      console.log(`current-url: ${tab.url}`)
+      this.setState({
+        text: tab.url
+      })
+    }
+  }
+
+  getCurrentTab = async () => {
+    const options = { active: true, currentWindow: true };
+    const [currentTab] = await chrome.tabs.query(options);
+    
+    return currentTab;
+  }
+
   generate = () => {
     const canvas = this.canvasRef.current
     if (!canvas) {
@@ -47,6 +64,8 @@ class App extends Component {
       <>
         <h1>Data sharing by QR Code</h1>
         <div className="card">
+        <a href="#" onClick={this.setTextFromCurrentTabUrl}>Current Tab URL</a>
+        <p />
           <input placeholder="Input text..." 
             value={this.state.text} 
             onChange={this.changeText} />
