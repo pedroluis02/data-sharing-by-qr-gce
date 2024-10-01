@@ -10,6 +10,6 @@
   "action": {
     "default_popup": "index.html"
   },
-  "permissions": [],
-  "host_permissions": ["*://*/*"]
+  "permissions": ["activeTab"],
+  "host_permissions": ["http://*/*", "https://*/*"]
 }
