@@ -53,7 +53,7 @@ class App extends Component {
       return
     }
 
-    const options =  {
+    const options = {
       width: 200,
       color: { dark: '#0000ffff' }
     }
@@ -75,11 +75,11 @@ class App extends Component {
         <div className="card">
           <a href="#" onClick={this.setTextFromCurrentTabUrl}>Current Tab URL</a>
           <p />
-          <input placeholder="Input text..." 
-            value={this.state.text} 
+          <input placeholder="Input text..."
+            value={this.state.text}
             onChange={this.onChangeText} />
           <p />
-          <button onClick={this.generate}>Genearte</button>
+          <button onClick={this.generate}>Generate</button>
           <p />
           <canvas ref={this.canvasRef} />
           <p>{this.state.generatedText}</p>
@@ -87,7 +87,7 @@ class App extends Component {
         <div className="read-the-docs">
           Scan this QR code!
         </div>
-      </>
+      </> 
     )
   }
 }
